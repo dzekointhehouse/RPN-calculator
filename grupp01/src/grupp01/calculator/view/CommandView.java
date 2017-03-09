@@ -5,52 +5,51 @@
  */
 package grupp01.calculator.view;
 
-import grupp01.calculator.model.RPN;
 import java.util.Scanner;
 
 /**
  *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
-public class CommandView extends View {
+public class CommandView implements IView {
 
-    RPN calc = new RPN();
+    private Scanner input = new Scanner(System.in);
+
+    // konstruktor
+    public CommandView() {
+        
+    }
+
 
     @Override
-    public void DisplayView() {
+    public void writeResult(double result) {
+        System.out.println("Resultat: " + result);
+    }
+
+    @Override
+    public void displayIntroMessage() {
         System.out.println("Ange RPN uttryck <retur> (tom sträng = avsluta): ");
-
     }
 
     @Override
-    /*
-    * Uview, metod som väntar på 
-    * input från användare och körs
-    * tills användaren matar in en tom sträng
-     */
-    public void Uview(String[] args) {
-
-        Scanner input = new Scanner(System.in);
-        String str;
-
-        while (true) {
-            try {
-                System.out.println("Ange RPN uttryck <retur> (tom sträng = avsluta): ");
-                str = input.nextLine();
-                if (str.isEmpty()) {
-                    System.out.println("Användaren avslutade programmet");
-                    System.exit(0);
-                } else {
-                    calc.InputStackTokens(str);
-                    System.out.println("Svar: " + calc.EvaluateToken());
-                }
-
-            } catch (Exception e) {
-                calc.clearStack();
-                System.out.println(e.getMessage());
-
-            }
-
-        }
+    public void displayOutroMessage() {
+        System.out.println("Användaren avslutade programmet! ");
     }
+
+    @Override
+    public String getNextExpression() {
+        return input.nextLine();
+    }
+    
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void writeException(String result) {
+        System.out.println("Blev ngt fel: " + result);
+    }
+
+  
 }

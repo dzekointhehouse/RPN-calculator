@@ -5,19 +5,26 @@
  */
 package grupp01.calculator.model.token;
 
-import grupp01.calculator.model.*;
+/**
+ * @author Elvir, Markus, Carlos
+ */
+public class PlusOperator implements Token {
 
-public class PlusOperator extends RPN {
+    @Override
+    public double evaluateToken(IsToken stack) {
 
+        double operand1, operand2, result;
 
-@Override
-public double EvaluateToken() throws Exception {
-    double operand1, operand2,result;
-    
-    operand1 = st.pop().EvaluateToken();
-    operand2 = st.pop().EvaluateToken();
-    result = operand2 + operand1;
-    
-    return result;
+        operand1 = stack.getToken().evaluateToken(stack);
+        operand2 = stack.getToken().evaluateToken(stack);
+        result = operand2 + operand1;
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+
+        return ("+");
     }
 }

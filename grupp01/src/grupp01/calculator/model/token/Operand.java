@@ -4,31 +4,32 @@
  * and open the template in the editor.
  */
 package grupp01.calculator.model.token;
-import grupp01.calculator.model.RPN;
+
 
 /**
- *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
-public class Operand extends RPN{
-    
+public class Operand implements Token {
+
     private double value;
-    // konstruktor som skapar en operand
-    public Operand(String token){
-        toDouble(token);
-    }
-    
-    //Parsar en Token till double 
-    private double toDouble(String token) {
-        
-        value = Double.parseDouble(token);
-        return value;
-    }   
+    private String stringOperand;
     
   
+     /* konstruktor som skapar en operand */   
+     
+    public Operand(String token) {
+        stringOperand = token;
+        value = Double.parseDouble(token);
+    }
+
     @Override
-    public double EvaluateToken()throws Exception{
+    public double evaluateToken(IsToken st) {
         return value;
     }
-}
 
+    @Override
+    public String toString() {
+
+        return (stringOperand);
+    }
+}

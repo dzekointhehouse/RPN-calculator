@@ -5,21 +5,27 @@
  */
 package grupp01.calculator.model.token;
 
-import grupp01.calculator.model.*;
+/**
+ * @author Elvir, Markus, Carlos
+ */
 
 
+public class MinusOperator implements Token {
 
+    @Override
+    public double evaluateToken(IsToken st) {
+        double operand1, operand2, result;
 
-public class MinusOperator extends RPN {
+        operand1 = st.getToken().evaluateToken(st);
+        operand2 = st.getToken().evaluateToken(st);
+        result = operand2 - operand1;
 
-    @Override 
-    public double EvaluateToken()throws Exception {
-    double operand1, operand2,result;
-    
-    operand1 = st.pop().EvaluateToken();
-    operand2 = st.pop().EvaluateToken();
-    result = operand2 - operand1;
-    
-    return result;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+
+        return ("-");
     }
 }

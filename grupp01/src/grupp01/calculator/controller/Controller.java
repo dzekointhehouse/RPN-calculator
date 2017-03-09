@@ -7,35 +7,64 @@ package grupp01.calculator.controller;
 
 import grupp01.calculator.model.*;
 import grupp01.calculator.view.*;
-import java.io.IOException;
-import java.util.Scanner;
+
 /**
- *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
 public class Controller {
-    
-    public Controller(){
-    }
-    /*
-    * Startar applikationen genom att
-    * veta vilken vy som ska användas
-    *
-    */
-    public void Run(String args[]) {
-        View view;
-        boolean quit = false;
 
-        if (args.length == 0) {
-            view = new CommandView();
+    private RPNCalculator calc;
+    private IView view;
 
-        } else {
-            view = new FileView();
+    /**
+     * Om vi inte har några argument så använder vi commandview, för att direkt
+     * kunna mata in ett uttryck, annars använder vi argument: en input fil och
+     * en output fil.
+     *
+     * @param args kommandoradsväxlar
+     */
+    public Controller(String[] args) {
+        try {
+            if (args.length == 0) {
+                view = new CommandView();
+            } else {
+                view = new FileView(args); // PrintStream skapas istället i FileViews konstruktor
+            }
+            calc = new RPNCalculator();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        do{
-            view.Uview(args);
-            quit = true;
-        } while(quit == false);
     }
+
+    /**
+     * väljer och kör commandVersion eller fileVersion beroende på argumenten.
+     *
+     */
+    public void run() {
+
+        String stringExpression;
+
+        view.displayIntroMessage();
+        
+        while (true) {
+            try {
+
+                stringExpression = view.getNextExpression(); // 1) hämta nästa RPN-sträng
+
+                if (stringExpression.isEmpty()) {
+                    view.displayOutroMessage();
+                    view.close();
+                    System.exit(0);
+                }
+
+                double result = calc.evaluateExpression(stringExpression); // 2) beräkna resultatet
+
+                view.writeResult(result); // 3) skriv ut svaret
+
+            } catch (Exception e) {
+                view.writeException(e.getMessage());
+            }
+        }
+    }
+
 }
-    

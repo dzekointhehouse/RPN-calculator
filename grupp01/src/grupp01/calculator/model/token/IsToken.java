@@ -8,17 +8,17 @@ package grupp01.calculator.model.token;
 /**
  * @author Elvir, Markus, Carlos
  */
-public class MultipOperator implements Token {
+public interface IsToken {
 
-    @Override
-    public double evaluateToken(IsToken st) {
+    public Token getToken();
 
-        return st.getToken().evaluateToken(st) * st.getToken().evaluateToken(st);
-    }
+    public void setToken(Token to);
 
-    @Override
-    public String toString() {
+    public Boolean isEmpty();
 
-        return ("*");
-    }
+    public Token showToken();
+
+    public void displayTopToken();
+
+    public void clearThisToken();
 }

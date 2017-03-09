@@ -5,12 +5,16 @@ package grupp01.calculator.model.token;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
- *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
-public interface Token{
-   
-    public abstract double EvaluateToken()throws Exception;
+public interface Token {
+
+    /**
+     * implementationen är stack, men typen är av IsToken och blir castat istället,
+     * så att det blir smidigt om implementationen skulle förändras.
+     * @param st det bearbetade uttrycket
+     * @return uträkning
+     */
+    public abstract double evaluateToken(IsToken st);
 }

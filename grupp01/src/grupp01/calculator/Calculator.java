@@ -4,26 +4,26 @@
  * and open the template in the editor.
  */
 package grupp01.calculator;
+
 import grupp01.calculator.controller.Controller;
 
+/**
+* RPN Calculator till laboration 1, gjord med passion och svett.
+*
+* @author  Elvir, Carlos och Markus
+* @version 2.0
+* @since   2016-09-31 
+*/
 
-/*
- *
- * @author Markus
- */
 public class Calculator {
     /* Main metod som startar controll metoden
-    * med antingen 0 eller 2 kommandoväxlar
-    */
+     * med antingen 0 eller 2 kommandoväxlar
+     */
+
     public static void main(String[] args) {
-        Controller controll = new Controller();
-       try {
-       if(args.length == 0 || args.length == 2 )
-           controll.Run(args);
-       }catch(Exception e ){
-           
-    System.out.println("Syntax error:"+e);
-}
-    
-}
+
+        Controller calculatorController = new Controller(args);
+        calculatorController.run();
+
+    }
 }

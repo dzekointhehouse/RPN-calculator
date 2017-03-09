@@ -5,65 +5,66 @@
  */
 package grupp01.calculator.view;
 
-import grupp01.calculator.model.*;
-import java.io.*;
+import java.io.FileReader;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
  *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
-public class FileView extends View {
-    
-        RPN calc = new RPN();
-        
-    public FileView(){
-    }
-    
-    @Override
-    public void DisplayView(){
-        System.out.println("< Read from text-file >");
-    }
+public class FileView implements IView {
 
-    @Override
-    /*
-    * Uview, abstrakt metod som läser från input fil och skriver
-    * till output fil i rätt format på strängarna
-    * kör sålänge vi har något o skriva från input filen
-    */
-    public void Uview(String[] args){
-        String strInput;
-        String strOutput;
+    /* Attribut */
+    private PrintStream printStream;
+    private FileReader fileReader;
+    private Scanner input;
 
-        PrintStream output = null;
-        Scanner scanner = null;
-        
-        try{
-            output = new PrintStream(args[1]);
-            scanner = new Scanner(new FileReader(args[0]));
-        }
-        catch(Exception e){
+    /* Konstruktor */
+    public FileView(String[] args) {
+        try {
+            // Vi försöker öppna en print stream till det andra argumentet: output.txt
+            printStream = new PrintStream(args[1]);
+            // Läser från första: input.txt
+            input = new Scanner(fileReader = new FileReader(args[0]));
+
+        } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
-        
-        do{
-            try{
-                strInput = scanner.nextLine();
-
-                calc.InputStackTokens(strInput);
-
-                strOutput = String.valueOf(String.format("%.2f",calc.EvaluateToken()));
-                
-                output.println(strOutput);
-            }
-            catch(Exception e){
-                calc.clearStack();
-                output.println(e.getMessage());
-            }
-            
-        }while(scanner.hasNextLine());
-
-        scanner.close();
-        output.close();
     }
+
+    @Override
+    public void writeResult(double result) {
+        this.printStream.println(String.format("%.2f", result));
+    }
+
+    @Override
+    public void writeException(String result) {
+        this.printStream.println(result);
+    }
+
+    @Override
+    public void displayIntroMessage() {
+        System.out.println("Läser från filerna... ");
+    }
+
+    @Override
+    public void displayOutroMessage() {
+        System.out.println("Beräkningar är färdiga! ");
+    }
+
+    @Override
+    public String getNextExpression() {
+        if (input.hasNext()) {
+            return input.nextLine();
+        }
+        return "";
+    }
+
+    @Override
+    public void close() {
+        this.printStream.close();
+    }
+
 }

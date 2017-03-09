@@ -5,28 +5,31 @@
  */
 package grupp01.calculator.model.token;
 
-import grupp01.calculator.model.RPN;
-
 /**
- *
- * @author optimusprime
+ * @author Elvir, Markus, Carlos
  */
-public class DivisionOperator extends RPN{
-    
-        @Override 
-    public double EvaluateToken() throws Exception {
+public class DivisionOperator implements Token {
+
+    @Override
+    public double evaluateToken(IsToken stack) throws IllegalArgumentException {
         double operand1,
                 operand2,
                 result;
 
-        operand1 = st.pop().EvaluateToken();
-        operand2 = st.pop().EvaluateToken();
+        operand1 = stack.getToken().evaluateToken(stack);
+        operand2 = stack.getToken().evaluateToken(stack);
         result = operand2 / operand1;
 
         if (operand1 == 0) {
-             throw new IllegalArgumentException("DivideByZero: "+operand2+" / "+operand1);
+            throw new IllegalArgumentException("DivideByZero: " + operand2 + " / " + operand1);
         }
         return result;
 
+    }
+
+    @Override
+    public String toString() {
+
+        return ("/");
     }
 }
