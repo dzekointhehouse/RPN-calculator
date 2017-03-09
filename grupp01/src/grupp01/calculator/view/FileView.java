@@ -65,6 +65,7 @@ public class FileView implements IView {
     @Override
     public void close() {
         this.printStream.close();
+        System.exit(0);
     }
 
 }

@@ -32,7 +32,7 @@ public class Controller {
             }
             calc = new RPNCalculator();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Syntax: java Calculator [källfil destinationsfil]");
         }
     }
 
@@ -54,7 +54,7 @@ public class Controller {
                 if (stringExpression.isEmpty()) {
                     view.displayOutroMessage();
                     view.close();
-                    System.exit(0);
+                    //System.exit(0);
                 }
 
                 double result = calc.evaluateExpression(stringExpression); // 2) beräkna resultatet
